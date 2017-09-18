@@ -51,7 +51,7 @@
             <div id="q2">
                 <h2> Question 2 </h2>
                 <p> Harry Potter > Lord of the Rings </p>
-                <select id="question1">
+                <select id="question2">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -64,7 +64,7 @@
             <div id="q3">
                 <h2> Question 3 </h2>
                 <p> Early Bird > Night Owl </p>
-                <select id="question1">
+                <select id="question3">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -77,7 +77,7 @@
             <div id="q4">
                 <h2> Question 4 </h2>
                 <p> Delivery and a Movie > Going out to a bar/club </p>
-                <select id="question1">
+                <select id="question4">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -90,7 +90,7 @@
             <div id="q5">
                 <h2> Question 5 </h2>
                 <p>  Bare feet > Socks </p>
-                <select id="question1">
+                <select id="question5">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -103,7 +103,7 @@
             <div id="q6">
                 <h2> Question 6 </h2>
                 <p> Croutons on your salad > No croutons </p>
-                <select id="question1">
+                <select id="question6">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -116,7 +116,7 @@
             <div id="q7">
                 <h2> Question 7 </h2>
                 <p> Backstreet Boys > NSYNC </p>
-                <select id="question1">
+                <select id="question7">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -129,7 +129,7 @@
             <div id="q8">
                 <h2> Question 8 </h2>
                 <p> Michael Scott over Leslie Knope </p>
-                <select id="question1">
+                <select id="question8">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -142,7 +142,7 @@
             <div id="q9">
                 <h2> Question 9 </h2>
                 <p> Instagram > Snapchat </p>
-                <select id="question1">
+                <select id="question9">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -155,7 +155,7 @@
             <div id="q10">
                 <h2> Question 10 </h2>
                 <p> Summer Olympics > Winter Olympics </p>
-                <select id="question1">
+                <select id="question10">
                     <option value="" disabled selected>Choose your option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
@@ -183,30 +183,26 @@
             event.preventDefault();
             
             var userData = {
-                name: $("#nameInput").val(),
-                photo: $("#photoLink").val(),
+                name: $("#nameInput").val().trim(),
+                photo: $("#photoLink").val().trim(),
                 scores:[
-                    $('#q1').val().trim(),
-                    $('#q2').val().trim(),
-                    $('#q3').val().trim(),
-                    $('#q4').val().trim(),
-                    $('#q5').val().trim(),
-                    $('#q6').val().trim(),
-                    $('#q7').val().trim(),
-                    $('#q8').val().trim(),
-                    $('#q9').val().trim(),
-                    $('#q10').val().trim()
+                    parseInt($('#question1').val()),
+                    $('#question2').val(),
+                    $('#question3').val(),
+                    $('#question4').val(),
+                    $('#question5').val(),
+                    $('#question6').val(),
+                    $('#question7').val(),
+                    $('#question8').val(),
+                    $('#question9').val(),
+                    $('#question10').val()
 				]
 			};
-            console.log('survey.html  userInput = ' + JSON.stringify(userData.name));
+            console.log('survey.html  userInput = ' + JSON.stringify(userData.scores));
             
-    
-            var currentURL = window.location.origin;
-            
-            $.post(currentURL + "/api/friends", userData, function(data){
-                console.log("survey.html user Data: " + data);
+            $.post("/api/friends", userData, function(response){
+                console.log(response);
             });
-            
         });
 
 
