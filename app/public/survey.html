@@ -165,12 +165,63 @@
                 </select>
             </div>
         
-
             <br>
-            <button type="button" class="btn btn-primary btn-lg btn-block glyphicon glyphicon-ok-sign" id="submitButton" >Submit</button>
+
+            <!-- <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg mt-4 mb-3 px-5 pt-3" id="submitButton"><i class="fa fa-user-plus mr-3" aria-hidden="true"></i>Find my BFF!</button>
+                    </div> -->
+                
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton"><i class="fa fa-check-circle" aria-hidden="true"></i>Submit</button>
+
+
             <br>
             <hr>
             <p> <a href="#">API Friends List</a> | <a href="#"> GitHub Repo </a></p>
+
+            
+
+            <!-- <div class="modal fade" id="resultsModel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Your New Best Friend!</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Your new Bestfriend is <strong><span id="friend_name"></span></strong>.</p>
+                            <p>Call now at <strong><span id="matchName"></span></strong>!</p>
+                            <img class="img-thumbnail my-3" id="matchImg" src=""></img>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <!-- <div id="resultsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title"><strong>Best Match</strong></h2>
+            </div>
+            <div class="modal-body">
+                <h2 id="matchName"></h2>
+                 <! <img id="matchImg" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg" alt="">  -->
+            <!-- </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+    
+        </div>
+    </div> --> 
+
+
 
         </div>
     </div>
@@ -179,10 +230,57 @@
     <script>
 
 
-        $("#submitButton").on("click", function(){
-            event.preventDefault();
+        // $("#submitButton").on("click", function(){
+        //     event.preventDefault();
+
+        //     var userData = {
+        //         name: $("#nameInput").val().trim(),
+        //         photo: $("#photoLink").val().trim(),
+        //         scores:[
+        //             parseInt($('#question1').val()),
+        //             $('#question2').val(),
+        //             $('#question3').val(),
+        //             $('#question4').val(),
+        //             $('#question5').val(),
+        //             $('#question6').val(),
+        //             $('#question7').val(),
+        //             $('#question8').val(),
+        //             $('#question9').val(),
+        //             $('#question10').val()
+		// 		]
+		// 	};
+        //     console.log('survey.html  userInput = ' + JSON.stringify(userData.scores));
             
-            var userData = {
+        //     $.post("/api/friends", userData, function(response){
+                
+        //         $("#matchName").text(response.name);
+        //         $('#matchImg').attr("src", response.photo);
+        //         $("#resultsModal").modal();
+
+        //         console.log("name: " + response.name);
+        //         console.log("img: " + response.photo);
+        //     });
+        // });
+
+
+
+            $("#submitButton").on("click", function(){
+            // Form validation
+            function validateForm() {
+            var isValid = true;
+            $('.form-control').each(function() {
+                if ( $(this).val() === '' )
+                    isValid = false;
+            });
+            $('.chosen-select').each(function() {
+                if( $(this).val() === "")
+                    isValid = false
+            })
+            return isValid;
+            }
+            if (validateForm() == true)
+            {
+                var userData = {
                 name: $("#nameInput").val().trim(),
                 photo: $("#photoLink").val().trim(),
                 scores:[
@@ -198,12 +296,29 @@
                     $('#question10').val()
 				]
 			};
-            console.log('survey.html  userInput = ' + JSON.stringify(userData.scores));
+                console.log(userData);
+                $.post("/api/friends", userData, function(data){
+                    // console.log(data);
+                    // $("#matchName").text(data.name);
+                    // $('#matchImg').attr("src", data.photo);
+                    // $("#resultsModal").modal();
+                    alert("Best match: " + data.name);
+                    console.log("name: " + data.name);
+                    console.log("photo: " + data.photo);
+                    // data.photo is coming back undefined
+                });
+            }
+            else
+            {
+                alert("Please fill out all fields!");
+            }
             
-            $.post("/api/friends", userData, function(response){
-                console.log(response);
-            });
+            return false;
         });
+
+
+
+
 
 
     </script>
